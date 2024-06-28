@@ -1,0 +1,88 @@
+---
+const navItems = [
+  { 
+    name: 'Artículos', 
+    href: '#', 
+    subItems: [
+      { name: 'Classic Bags', href: '#classicbags' },
+      { name: 'Big Bags', href: '#bigbags' },
+      { name: 'Cool Stuff', href: '#coolstuff' }
+    ] 
+  },
+  { name: 'Parches', href: '#parches' },
+  { name: 'Precios', href: '#precios' },
+  { name: 'Contáctanos', href: '#contactanos' }
+];
+---
+
+<head>
+  <!-- Include the JavaScript files -->
+  <script src="/scripts/menu-toggle.js" defer></script>
+  <script src="/scripts/dropdown.js" defer></script>
+  <script src="/scripts/smooth-scroll.js" defer></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<header class="bg-[#ff8fab] text-white py-2 fixed left-0 top-0 right-0 z-50">
+  <div class="container mx-auto flex justify-between items-center px-4">
+    <img class="h-12" src="/images/logo_p&c blanco.png" alt="Logo">
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex space-x-4 items-center text-sm md:text-base relative">
+      {navItems.map((item) => (
+        <div class="relative group">
+          <a
+            href={item.href}
+            class={`hover:scale-110 hover:bg-gray-100 hover:text-[#ff8fab] transition-transform duration-300 ease-in-out px-2 py-1 rounded font-bold ${item.subItems ? 'dropdown-toggle' : ''}`}
+          >
+            {item.name}
+          </a>
+          {item.subItems && (
+            <div class="dropdown hidden absolute left-0 mt-2 w-48 bg-white text-black rounded-lg shadow-lg">
+              {item.subItems.map((subitem) => (
+                <a href={subitem.href} class="block px-4 py-2 hover:bg-gray-200">
+                  {subitem.name}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-button" class="md:hidden text-white">
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Navigation Menu -->
+  <nav id="nav-menu" class="md:hidden hidden bg-[#ff8fab] py-2">
+    <ul class="flex flex-col space-y-2 items-center">
+      {navItems.map((item) => (
+        <li class="relative">
+          <a href={item.href} class="block hover:scale-110 hover:bg-gray-100 hover:text-[#ff8fab] transition-transform duration-300 ease-in-out px-4 py-2 rounded font-bold dropdown-toggle">
+            {item.name}
+          </a>
+          {item.subItems && (
+            <ul class="dropdown hidden">
+              {item.subItems.map((subitem) => (
+                <li>
+                  <a href={subitem.href} class="block px-4 py-2 hover:bg-gray-200">
+                    {subitem.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
